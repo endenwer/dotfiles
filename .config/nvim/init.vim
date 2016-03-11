@@ -241,3 +241,21 @@ nnoremap <Leader>to :Topen
 
 " hide terminal with number
 nnoremap <Leader>th :Tclose
+
+" Fugitive
+nmap <Leader>gs :Gstatus<CR>
+nmap <Leader>gd :Gdiff<CR>
+nmap <Leader>gr :Gread<CR>
+nmap <Leader>gw :Gwrite<CR>
+nmap <Leader>gc :Gcommit<CR>
+nmap <Leader>ge :Gedit<CR>
+nmap <Leader>gl :Glog<CR>
+
+nmap <Leader>gg :Ggrep<Space>
+nmap <Leader>gm :Gmove<Space>
+nmap <Leader>gb :Git branch<Space>
+nmap <Leader>go :Git checkout<Space>
+
+" work with diffs
+xnoremap dp :diffput<cr>
+xnoremap do :diffget<cr>
