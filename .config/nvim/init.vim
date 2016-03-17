@@ -18,6 +18,7 @@ Plug 'vim-scripts/YankRing.vim' " provide mechanism to reference previous yanded
 Plug 'cohama/lexima.vim' " auto close parentheses
 Plug 'tpope/vim-fireplace' " REPL for Clojure
 Plug 'kien/rainbow_parentheses.vim' " diferent colors for parentheses
+Plug 'rking/ag.vim' " grep
 call plug#end()
 
 " ======== General Settings ========
@@ -259,3 +260,6 @@ nmap <Leader>go :Git checkout<Space>
 " work with diffs
 xnoremap dp :diffput<cr>
 xnoremap do :diffget<cr>
+
+" Ag
+nmap <Leader>ag :Ag<Space>
