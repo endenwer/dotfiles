@@ -258,8 +258,8 @@ nmap <Leader>gb :Git branch<Space>
 nmap <Leader>go :Git checkout<Space>
 
 " work with diffs
-xnoremap dp :diffput<cr>
-xnoremap do :diffget<cr>
+xnoremap <Leader>dp :diffput<cr>
+xnoremap <Leader>do :diffget<cr>
 
 " Ag
 nmap <Leader>ag :Ag<Space>
