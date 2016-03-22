@@ -19,6 +19,7 @@ Plug 'cohama/lexima.vim' " auto close parentheses
 Plug 'tpope/vim-fireplace' " REPL for Clojure
 Plug 'kien/rainbow_parentheses.vim' " diferent colors for parentheses
 Plug 'rking/ag.vim' " grep
+Plug 'Shougo/deoplete.nvim' " completion
 call plug#end()
 
 " ======== General Settings ========
@@ -106,6 +107,9 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+" ======== Deoplete
+let g:deoplete#enable_at_startup = 1
 
 " ======== Mapping ========
 
