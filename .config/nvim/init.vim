@@ -111,6 +111,13 @@ au Syntax * RainbowParenthesesLoadBraces
 " ======== Deoplete
 let g:deoplete#enable_at_startup = 1
 
+" ========= NERD Tree
+
+" do not show 'Press ? for help' text
+let NERDTreeMinimalUI = 1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeQuitOnOpen = 1
+
 " ======== Mapping ========
 
 " surround a word with "quotes"
