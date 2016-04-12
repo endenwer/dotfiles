@@ -20,6 +20,8 @@ Plug 'tpope/vim-fireplace' " REPL for Clojure
 Plug 'kien/rainbow_parentheses.vim' " diferent colors for parentheses
 Plug 'rking/ag.vim' " grep
 Plug 'Shougo/deoplete.nvim' " completion
+Plug 'SirVer/ultisnips' " Snippet support
+Plug 'honza/vim-snippets' " collection of snippets
 call plug#end()
 
 " ======== General Settings ========
