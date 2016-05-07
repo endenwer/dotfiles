@@ -22,6 +22,7 @@ Plug 'rking/ag.vim' " grep
 Plug 'Shougo/deoplete.nvim' " completion
 Plug 'SirVer/ultisnips' " Snippet support
 Plug 'honza/vim-snippets' " collection of snippets
+Plug 'gregsexton/gitv' " git log
 call plug#end()
 
 " ======== General Settings ========
@@ -120,6 +121,8 @@ let NERDTreeMinimalUI = 1
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeQuitOnOpen = 1
 
+" ======== Gitv
+let g:Gitv_DoNotMapCtrlKey = 1
 " ======== Mapping ========
 
 " surround a word with "quotes"
