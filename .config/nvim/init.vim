@@ -231,6 +231,7 @@ nnoremap <silent> <C-\> :NERDTreeFind<CR>:vertical<CR>
 
 " ======== CtrlP
 nnoremap <Leader>o :CtrlP<cr>
+nnoremap <Leader>b :CtrlPBuffer<cr>
 
 " ======== Easymotion
 
