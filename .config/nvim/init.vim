@@ -23,6 +23,10 @@ Plug 'Shougo/deoplete.nvim' " completion
 Plug 'SirVer/ultisnips' " Snippet support
 Plug 'honza/vim-snippets' " collection of snippets
 Plug 'gregsexton/gitv' " git log
+
+" Ag wrapper search and edit
+Plug 'dyng/ctrlsf.vim', { 'on': ['CtrlSF', 'CtrlSFToggle'] }
+
 call plug#end()
 
 " ======== General Settings ========
@@ -123,6 +127,15 @@ let NERDTreeQuitOnOpen = 1
 
 " ======== Gitv
 let g:Gitv_DoNotMapCtrlKey = 1
+
+" ======== CtrlSF
+
+let g:ctrlsf_default_root='project'
+let g:ctrlsf_position='bottom'
+let g:ctrlsf_winsize = '30%'
+let g:ctrlsf_auto_close=0
+let g:ctrlsf_regex_pattern=1
+
 " ======== Mapping ========
 
 " surround a word with "quotes"
@@ -221,10 +234,6 @@ nnoremap <Leader>o :CtrlP<cr>
 
 " ======== Easymotion
 
-" f{char} to move to {char}
-vmap <Leader>f <Plug>(easymotion-db-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-
 " s{char}{char} to move to {char}{char}
 vmap s <Plug>(easymotion-bd-f2)
 nmap s <Plug>(easymotion-overwin-f2)
@@ -259,7 +268,7 @@ nnoremap <Leader>to :Topen
 " hide terminal with number
 nnoremap <Leader>th :Tclose
 
-" Fugitive
+" ======== Fugitive
 nmap <Leader>gs :Gstatus<CR>
 nmap <Leader>gd :Gdiff<CR>
 nmap <Leader>gr :Gread<CR>
@@ -268,7 +277,6 @@ nmap <Leader>gc :Gcommit<CR>
 nmap <Leader>ge :Gedit<CR>
 nmap <Leader>gl :Glog<CR>
 
-nmap <Leader>gg :Ggrep<Space>
 nmap <Leader>gm :Gmove<Space>
 nmap <Leader>gb :Git branch<Space>
 nmap <Leader>go :Git checkout<Space>
@@ -277,5 +285,11 @@ nmap <Leader>go :Git checkout<Space>
 xnoremap <Leader>dp :diffput<cr>
 xnoremap <Leader>do :diffget<cr>
 
-" Ag
-nmap <Leader>ag :Ag<Space>
+" ======== CtrlSF
+nmap <Leader>ag :CtrlSF<Space>
+nmap <Leader>gg :CtrlSFToggle<CR>
+" find current word
+nmap <Leader>fw <Plug>CtrlSFCwordPath
+" find current selection
+vmap <Leader>f <Plug>CtrlSFVwordExec
+
