@@ -70,7 +70,10 @@ values."
                                       counsel
                                       flx
                                       (counsel-projectile :toggle (configuration-layer/package-usedp 'projectile))
-
+                                      (magithub
+                                        :after magit
+                                        :config (magithub-feature-autoinject t)
+                                        (setq magithub-clone-default-directory "~/github"))
                                       adjust-parens
                                       yasnippet-snippets
                                       (vue-mode :location (recipe
