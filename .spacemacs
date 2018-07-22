@@ -31,8 +31,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      gtags
-     (auto-completion :variables
-                      auto-completion-complete-with-key-sequence "jk")
+     auto-completion
      ;; better-defaults
      ruby-on-rails
      react
@@ -283,10 +282,10 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (set-face-attribute 'default nil :font "Fira Code Retina-12")
-  (setq-default line-spacing 4)
+  (setq-default line-spacing 6)
   (setq-default dotspacemacs-persistent-server t)
+  (setq-default dotspacemacs-use-spacelpa t)
   (setq powerline-default-separator nil)
-  (setq paradox-github-token "13dcd2ec3fd9365efc536769f9f3f663e442da49")
   (setq ruby-insert-encoding-magic-comment nil)
   (setq enh-ruby-add-encoding-comment-on-save nil)
   (setq js2-strict-missing-semi-warning nil)
@@ -305,9 +304,7 @@ you should place your code here."
     "scss-mode-hook"
     (and
      (set (make-local-variable 'css-indent-offset) 2)
-     (set (make-local-variable 'scss-compile-at-save) nil)
-     )
-    )
+     (set (make-local-variable 'scss-compile-at-save) nil)))
   (add-hook 'scss-mode-hook
             '(lambda() (scss-custom)))
 
@@ -335,13 +332,12 @@ you should place your code here."
   (setq helm-split-window-in-side-p t)
 
   ;; ivy settings
+  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (spacemacs/set-leader-keys
     "ff" 'counsel-find-file
     "bb" 'ivy-switch-buffer
     "pf" 'counsel-projectile-find-file
     "pp" 'counsel-projectile-switch-project)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
 
   (spaceline-compile))
 
