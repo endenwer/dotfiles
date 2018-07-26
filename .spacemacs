@@ -18,13 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     python
-     csv
-     rust
-     sql
-     php
-     markdown
-     yaml
+     ivy
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -36,7 +30,6 @@ values."
      ruby-on-rails
      react
      git
-     ;; markdown
      ;; org
      (shell :variables
             shell-default-shell 'ansi-term
@@ -47,6 +40,13 @@ values."
      ;; version-control
 
      ;; langs
+     csv
+     sql
+     yaml
+     markdown
+     php
+     rust
+     python
      clojure
      emacs-lisp
      html
@@ -65,16 +65,11 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      ;; ivy packages
-                                      counsel
-                                      flx
-                                      (counsel-projectile :toggle (configuration-layer/package-usedp 'projectile))
                                       (magithub
                                         :after magit
                                         :config (magithub-feature-autoinject t)
                                         (setq magithub-clone-default-directory "~/github"))
                                       adjust-parens
-                                      yasnippet-snippets
                                       (vue-mode :location (recipe
                                                            :fetcher github
                                                            :repo "codefalling/vue-mode")))
@@ -132,7 +127,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark)
+   dotspacemacs-themes '(zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -211,7 +206,7 @@ values."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
@@ -239,14 +234,14 @@ values."
    dotspacemacs-line-numbers nil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
    dotspacemacs-highlight-delimiters 'all
    ;; If non nil advises quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
@@ -261,7 +256,8 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
-   ))
+   ;; modline theme
+   dotspacemacs-mode-line-theme '(spacemacs)))
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -281,14 +277,15 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (set-face-attribute 'default nil :font "Fira Code Retina-12")
   (setq-default line-spacing 6)
-  (setq-default dotspacemacs-persistent-server t)
   (setq-default dotspacemacs-use-spacelpa t)
-  (setq powerline-default-separator nil)
+  (setq powerline-default-separator 'slant)
   (setq ruby-insert-encoding-magic-comment nil)
   (setq enh-ruby-add-encoding-comment-on-save nil)
   (setq js2-strict-missing-semi-warning nil)
+
+  ;; Ligatures support
+  (mac-auto-operator-composition-mode)
 
   ;; web mode settings
   (defun my-web-mode-hook ()
@@ -313,11 +310,48 @@ you should place your code here."
   (require 'adjust-parens)
   (add-hook 'clojure-mode-hook #'adjust-parens-mode)
 
-  ;; smartparens keybindings
-  (define-key global-map (kbd "C-)") 'sp-forward-slurp-sexp)
-  (define-key global-map (kbd "C-(") 'sp-backward-slurp-sexp)
-  (define-key global-map (kbd "M-)") 'sp-forward-barf-sexp)
-  (define-key global-map (kbd "M-(") 'sp-backward-barf-sexp)
+  ;; smartparens config
+  (require 'smartparens-config)
+  (setq sp-base-key-bindings 'sp-smartparens-bindings)
+  (bind-keys
+   :map smartparens-mode-map
+   ("C-M-a" . sp-beginning-of-sexp)
+   ("C-M-e" . sp-end-of-sexp)
+
+   ("M-j"   . sp-down-sexp)
+   ("M-u"   . sp-up-sexp)
+   ("C-M-j" . sp-backward-down-sexp)
+   ("C-M-u" . sp-backward-up-sexp)
+
+   ("C-M-f" . sp-forward-sexp)
+   ("C-M-b" . sp-backward-sexp)
+
+   ("C-M-n" . sp-next-sexp)
+   ("C-M-p" . sp-previous-sexp)
+
+   ("C-S-f" . sp-forward-symbol)
+   ("C-S-b" . sp-backward-symbol)
+
+   ("C-)" . sp-forward-slurp-sexp)
+   ("C-}" . sp-forward-barf-sexp)
+   ("C-(" . sp-backward-slurp-sexp)
+   ("C-{" . sp-backward-barf-sexp)
+
+   ("C-M-t" . sp-transpose-sexp)
+   ("C-M-r" . sp-raise-sexp)
+   ("C-M-k" . sp-kill-sexp)
+   ("C-k"   . sp-kill-hybrid-sexp)
+   ("M-k"   . sp-backward-kill-sexp)
+   ("C-M-w" . sp-copy-sexp)
+
+   ("M-<backspace>" . backward-kill-word)
+   ("C-<backspace>" . sp-backward-kill-word)
+   ([remap sp-backward-kill-word] . backward-kill-word)
+
+   ("M-{" . sp-backward-unwrap-sexp)
+   ("M-}" . sp-unwrap-sexp)
+
+   ("C-x C-t" . sp-transpose-hybrid-sexp))
 
   ;; js indent
   (setq js-indent-level 2)
@@ -332,12 +366,9 @@ you should place your code here."
   (setq helm-split-window-in-side-p t)
 
   ;; ivy settings
-  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
-  (spacemacs/set-leader-keys
-    "ff" 'counsel-find-file
-    "bb" 'ivy-switch-buffer
-    "pf" 'counsel-projectile-find-file
-    "pp" 'counsel-projectile-switch-project)
+  (setq ivy-re-builders-alist
+        '((swiper   . spacemacs/ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
 
   (spaceline-compile))
 
