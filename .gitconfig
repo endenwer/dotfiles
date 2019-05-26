@@ -1,0 +1,6 @@
+[user]
+	name = Stepan Lusnikov
+	email = endenwer@gmail.com
+[core]
+	editor = emacsclient
+	excludesfile = /Users/endenwer/.gitignore
