@@ -17,7 +17,8 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(go
+   '(shell-scripts
+     go
      nginx
      octave
      ansible
@@ -420,5 +421,146 @@ you should place your code here."
 
   (spaceline-compile))
 
+
+(defun gitlab--shell-to-string (cmd)
+  "Execute CMD in a shell.
+Returns stdout if command succeeds,otherwise returns nil"
+  (interactive)
+  (with-temp-buffer
+    (let ((glob-buf-stdout (buffer-name)))
+      (if (eq 0 (call-process-shell-command cmd nil glob-buf-stdout))
+          (buffer-string)
+        (signal 'error (list (format "command \"%s\" failed with non-zero exit code" cmd)))))))
+
+(defun gitlab--get-git-exec ()
+  "This duplicates functionality inside magit."
+  (executable-find "git"))
+
+(defun gitlab--get-branch ()
+  "Find the current branch."
+  (let
+      ((cmd (format "%s rev-parse --abbrev-ref HEAD" (gitlab--get-git-exec))))
+    (s-trim (gitlab--shell-to-string cmd))))
+
+(defun get-country-from-branch (branch-name)
+  (first (split-string branch-name "/")))
+
+(defun cashwagon-crm-create-mr ()
+  "Open browser to view current selection, if applicable, in gitlab.
+If a Dired buffer is open, browse to the directory listing in gitlab.
+If the current buffer is neither a file or Dired buffer, open the current
+project in gitlab"
+  (interactive)
+  (let* ((branch-name (gitlab--get-branch))
+         (country (get-country-from-branch branch-name))
+         (url (format "https://git.cashwagon.com/general/webcrm/merge_requests/new?utf8=✓&merge_request[source_project_id]=10&merge_request[source_branch]=%s&merge_request[target_project_id]=10&merge_request[target_branch]=%s/production" branch-name country)))
+    (browse-url url)))
+
+
+(defun cashwagon-site-create-mr ()
+  "Open browser to view current selection, if applicable, in gitlab.
+If a Dired buffer is open, browse to the directory listing in gitlab.
+If the current buffer is neither a file or Dired buffer, open the current
+project in gitlab"
+  (interactive)
+  (let* ((branch-name (gitlab--get-branch))
+         (country (get-country-from-branch branch-name))
+         (url (format "https://git.cashwagon.com/general/site/merge_requests/new?utf8=✓&merge_request[source_project_id]=11&merge_request[source_branch]=%s&merge_request[target_project_id]=11&merge_request[target_branch]=%s/production" branch-name country)))
+    (browse-url url)))
+
+
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "bbea3143fe920d2738e73a042d1edcc0e0c1e9726a757dc0b51ca8d5ee825255" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "1e469285a9eee5bb7099711440ab27b571d02aa860c009086ef2d341b4c5d535" default)))
+ '(evil-want-Y-yank-to-eol t)
+ '(package-selected-packages
+   (quote
+    (wgrep smex ivy-hydra edit-indirect ssass-mode vue-html-mode powerline pos-tip rake pcre2el org-plus-contrib mmm-mode skewer-mode simple-httpd json-snatcher json-reformat js2-mode parent-mode request haml-mode gitignore-mode flx magit magit-popup git-commit ghub let-alist with-editor smartparens iedit anzu evil goto-chg undo-tree php-mode projectile counsel swiper ivy web-completion-data dash-functional tern restclient know-your-http-well company hydra inflections edn multiple-cursors paredit peg eval-sexp-fu highlight cider sesman seq spinner queue pkg-info clojure-mode epl markdown-mode rust-mode inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup powershell doom-themes all-the-icons memoize gradle-mode magithub ghub+ apiwrap yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient-helm restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode paradox orgit org-bullets open-junk-file ob-restclient ob-http neotree multi-term move-text minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump drupal-mode diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-restclient company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adjust-parens adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(safe-local-variable-values
+   (quote
+    ((eval cider-register-cljs-repl-type "status-nrepl-android" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:android])
+                                (figwheel-api/start-cljs-repl))" nil)
+     (eval cider-register-cljs-repl-type "status-nrepl-ios" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:ios])
+                                (figwheel-api/start-cljs-repl))" nil)
+     (eval cider-register-cljs-repl-type "status-nrepl" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:android])
+                                (figwheel-api/start-cljs-repl))" nil)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-safe-themes
+   (quote
+    ("bbb4a4d39ed6551f887b7a3b4b84d41a3377535ccccf901a3c08c7317fad7008" "723e48296d0fc6e030c7306c740c42685d672fd22337bc84392a1cf92064788a" "5715d3b4b071d33af95e9ded99a450aad674e308abb06442a094652a33507cd2" "c5d320f0b5b354b2be511882fc90def1d32ac5d38cccc8c68eab60a62d1621f2" "bbea3143fe920d2738e73a042d1edcc0e0c1e9726a757dc0b51ca8d5ee825255" "0598de4cc260b7201120b02d580b8e03bd46e5d5350ed4523b297596a25f7403" "aa0a998c0aa672156f19a1e1a3fb212cdc10338fb50063332a0df1646eb5dfea" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "891debfe489c769383717cc7d0020244a8d62ce6f076b2c42dd1465b7c94204d" "1e469285a9eee5bb7099711440ab27b571d02aa860c009086ef2d341b4c5d535" default)))
+ '(evil-want-Y-yank-to-eol t)
+ '(fci-rule-color "#383838")
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (insert-shebang flycheck-bashate fish-mode company-shell wgrep smex ivy-hydra edit-indirect ssass-mode vue-html-mode powerline pos-tip rake pcre2el org-plus-contrib mmm-mode skewer-mode simple-httpd json-snatcher json-reformat js2-mode parent-mode request haml-mode gitignore-mode flx magit magit-popup git-commit ghub let-alist with-editor smartparens iedit anzu evil goto-chg undo-tree php-mode projectile counsel swiper ivy web-completion-data dash-functional tern restclient know-your-http-well company hydra inflections edn multiple-cursors paredit peg eval-sexp-fu highlight cider sesman seq spinner queue pkg-info clojure-mode epl markdown-mode rust-mode inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup powershell doom-themes all-the-icons memoize gradle-mode magithub ghub+ apiwrap yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient-helm restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode paradox orgit org-bullets open-junk-file ob-restclient ob-http neotree multi-term move-text minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump drupal-mode diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-restclient company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adjust-parens adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(safe-local-variable-values
+   (quote
+    ((eval cider-register-cljs-repl-type "status-nrepl-android" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:android])
+                                (figwheel-api/start-cljs-repl))" nil)
+     (eval cider-register-cljs-repl-type "status-nrepl-ios" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:ios])
+                                (figwheel-api/start-cljs-repl))" nil)
+     (eval cider-register-cljs-repl-type "status-nrepl" "(do (require 'figwheel-api)
+                                (figwheel-api/start [:android])
+                                (figwheel-api/start-cljs-repl))" nil))))
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
