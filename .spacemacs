@@ -17,7 +17,12 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(
+   '(go
+     nginx
+     octave
+     ansible
+     typescript
+     org
      ivy
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -26,11 +31,13 @@ values."
      ;; ----------------------------------------------------------------
      gtags
      auto-completion
-     ;; better-defaults
+     (better-defaults :variables
+                      better-defaults-move-to-end-of-code-first t
+                      better-defaults-move-to-beginning-of-code-first t)
      ruby-on-rails
      react
      git
-     ;; org
+
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-height 30
@@ -47,7 +54,8 @@ values."
      php
      rust
      python
-     clojure
+     (clojure :variables
+              clojure-enable-clj-refactor t)
      emacs-lisp
      html
      javascript
@@ -64,11 +72,10 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      (magithub
-                                        :after magit
-                                        :config (magithub-feature-autoinject t)
-                                        (setq magithub-clone-default-directory "~/github"))
+   dotspacemacs-additional-packages '(evil-snipe
+                                      coffee-mode
+                                      graphql-mode
+                                      flycheck
                                       adjust-parens
                                       (vue-mode :location (recipe
                                                            :fetcher github
@@ -127,7 +134,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn)
+   dotspacemacs-themes '(zenburn gruvbox)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -231,10 +238,10 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers 'relative
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-smartparens-strict-mode nil
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
@@ -340,9 +347,9 @@ you should place your code here."
    ("C-M-t" . sp-transpose-sexp)
    ("C-M-r" . sp-raise-sexp)
    ("C-M-k" . sp-kill-sexp)
+   ("C-M-y" . sp-copy-sexp)
    ("C-k"   . sp-kill-hybrid-sexp)
    ("M-k"   . sp-backward-kill-sexp)
-   ("C-M-w" . sp-copy-sexp)
 
    ("M-<backspace>" . backward-kill-word)
    ("C-<backspace>" . sp-backward-kill-word)
@@ -365,10 +372,51 @@ you should place your code here."
   ;; helm settings
   (setq helm-split-window-in-side-p t)
 
-  ;; ivy settings
-  (setq ivy-re-builders-alist
-        '((swiper   . spacemacs/ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
+  ;; add syntax checking for clojure
+  (require 'flycheck)
+
+  (flycheck-define-checker clojure-joker
+    "A Clojure syntax checker using Joker.
+  See URL `https://github.com/candid82/joker'."
+    :command ("joker" "--lint" "-")
+    :standard-input t
+    :error-patterns
+    ((error line-start "<stdin>:" line ":" column ": " (0+ not-newline) (or "error: " "Exception: ") (message) line-end)
+     (warning line-start "<stdin>:" line ":" column ": " (0+ not-newline) "warning: " (message) line-end))
+    :modes (clojure-mode clojurec-mode)
+    :predicate (lambda () (not (string= "edn" (file-name-extension (buffer-file-name))))))
+
+  (flycheck-define-checker clojurescript-joker
+    "A ClojureScript syntax checker using Joker.
+  See URL `https://github.com/candid82/joker'."
+    :command ("joker" "--lintcljs" "-")
+    :standard-input t
+    :error-patterns
+    ((error line-start "<stdin>:" line ":" column ": " (0+ not-newline) (or "error: " "Exception: ") (message) line-end)
+     (warning line-start "<stdin>:" line ":" column ": " (0+ not-newline) "warning: " (message) line-end))
+    :modes (clojurescript-mode))
+
+  (add-to-list 'flycheck-checkers 'clojure-joker)
+  (add-to-list 'flycheck-checkers 'clojurescript-joker)
+
+  (add-hook 'clojure-mode-hook 'flycheck-mode)
+  (add-hook 'clojurescript-mode-hook 'flycheck-mode)
+
+  (setq avy-timeout-seconds 0.2)
+  (define-key evil-normal-state-map (kbd "C-k") 'evil-avy-goto-char-timer)
+  (define-key evil-normal-state-map (kbd "M-v") 'evil-paste-after)
+
+  (define-key evil-normal-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+  (define-key evil-visual-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+
+  (define-key evil-normal-state-map (kbd "C-f") 'forward-char)
+  (define-key evil-visual-state-map (kbd "C-f") 'forward-char)
+  (define-key evil-insert-state-map (kbd "C-f") 'forward-char)
+
+  (evil-snipe-mode +1)
+  (evil-snipe-override-mode +1)
+  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
 
   (spaceline-compile))
 
