@@ -6,6 +6,8 @@ if status is-interactive
   set -gx VISUAL 'emacsclient -t'
 end
 
+status --is-interactive; and source (rbenv init -|psub)
+
 eval (direnv hook fish)
 
 if not set -q GOPATH
