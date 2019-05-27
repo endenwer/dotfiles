@@ -292,8 +292,9 @@ you should place your code here."
   (setq enh-ruby-add-encoding-comment-on-save nil)
   (setq js2-strict-missing-semi-warning nil)
 
-  ;; Ligatures support
-  (mac-auto-operator-composition-mode)
+  ;; Ligatures support or mac os
+  (if (eq system-type 'darwin)
+      (mac-auto-operator-composition-mode))
 
   ;; web mode settings
   (defun my-web-mode-hook ()
