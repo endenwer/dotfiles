@@ -11,4 +11,4 @@ eval (direnv hook fish)
 if not set -q GOPATH
     set -gx GOPATH $HOME/go
 end
-set -U fish_user_paths $HOME/bin $GOPATH/bin $HOME/.fzf/bin $HOME/.rbenv/bin /usr/local/bin
+set -U fish_user_paths $HOME/bin $GOPATH/bin $HOME/.fzf/bin $HOME/.rbenv/bin $HOME/.rbenv/shims /usr/local/bin
