@@ -17,7 +17,8 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(shell-scripts
+   '(docker
+     shell-scripts
      go
      nginx
      octave
@@ -285,6 +286,15 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "M-v") 'evil-paste-after)
+    (define-key evil-insert-state-map (kbd "M-v") 'evil-paste-after)
+    (define-key evil-motion-state-map (kbd "C-j") 'evil-avy-goto-char-timer)
+    (define-key evil-motion-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+    (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+    (define-key evil-motion-state-map (kbd "C-f") 'forward-char))
+
   (setq-default line-spacing 6)
   (setq-default dotspacemacs-use-spacelpa t)
   (setq powerline-default-separator 'slant)
@@ -405,17 +415,6 @@ you should place your code here."
   (add-hook 'clojurescript-mode-hook 'flycheck-mode)
 
   (setq avy-timeout-seconds 0.2)
-  (define-key evil-normal-state-map (kbd "C-k") 'evil-avy-goto-char-timer)
-  (define-key evil-normal-state-map (kbd "M-v") 'evil-paste-after)
-
-  (define-key evil-normal-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
-  (define-key evil-visual-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
-  (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
-
-  (define-key evil-normal-state-map (kbd "C-f") 'forward-char)
-  (define-key evil-visual-state-map (kbd "C-f") 'forward-char)
-  (define-key evil-insert-state-map (kbd "C-f") 'forward-char)
-
   (evil-snipe-mode +1)
   (evil-snipe-override-mode +1)
   (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
@@ -524,7 +523,7 @@ This function is called at the very end of Spacemacs initialization."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (insert-shebang flycheck-bashate fish-mode company-shell wgrep smex ivy-hydra edit-indirect ssass-mode vue-html-mode powerline pos-tip rake pcre2el org-plus-contrib mmm-mode skewer-mode simple-httpd json-snatcher json-reformat js2-mode parent-mode request haml-mode gitignore-mode flx magit magit-popup git-commit ghub let-alist with-editor smartparens iedit anzu evil goto-chg undo-tree php-mode projectile counsel swiper ivy web-completion-data dash-functional tern restclient know-your-http-well company hydra inflections edn multiple-cursors paredit peg eval-sexp-fu highlight cider sesman seq spinner queue pkg-info clojure-mode epl markdown-mode rust-mode inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup powershell doom-themes all-the-icons memoize gradle-mode magithub ghub+ apiwrap yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient-helm restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode paradox orgit org-bullets open-junk-file ob-restclient ob-http neotree multi-term move-text minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump drupal-mode diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-restclient company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adjust-parens adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (docker tablist wgrep smex ivy-hydra edit-indirect ssass-mode vue-html-mode powerline pos-tip rake pcre2el org-plus-contrib mmm-mode skewer-mode simple-httpd json-snatcher json-reformat js2-mode parent-mode request haml-mode gitignore-mode flx magit magit-popup git-commit ghub let-alist with-editor smartparens iedit anzu evil goto-chg undo-tree php-mode projectile counsel swiper ivy web-completion-data dash-functional tern restclient know-your-http-well company hydra inflections edn multiple-cursors paredit peg eval-sexp-fu highlight cider sesman seq spinner queue pkg-info clojure-mode epl markdown-mode rust-mode inf-ruby bind-map bind-key yasnippet packed anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup powershell doom-themes all-the-icons memoize gradle-mode magithub ghub+ apiwrap yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify vue-mode volatile-highlights vi-tilde-fringe uuidgen use-package toml-mode toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restclient-helm restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode paradox orgit org-bullets open-junk-file ob-restclient ob-http neotree multi-term move-text minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md ggtags fuzzy flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emmet-mode elisp-slime-nav dumb-jump drupal-mode diminish define-word cython-mode csv-mode counsel-projectile company-web company-tern company-statistics company-restclient company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu chruby cargo bundler auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adjust-parens adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(safe-local-variable-values
    (quote
     ((eval cider-register-cljs-repl-type "status-nrepl-android" "(do (require 'figwheel-api)
