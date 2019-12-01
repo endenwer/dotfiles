@@ -17,13 +17,13 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(docker
+   '(swift
+     php
+     docker
      shell-scripts
-     go
      nginx
      octave
      ansible
-     typescript
      org
      ivy
      ;; ----------------------------------------------------------------
@@ -44,16 +44,20 @@ values."
             shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
+     syntax-checking
      ;; spell-checking
-     ;; syntax-checking
      ;; version-control
 
      ;; langs
+     typescript
+     (go :variables
+         godoc-at-point-function 'godoc-gogetdoc
+         go-tab-width 4
+         go-format-before-save t)
      csv
      sql
      yaml
      markdown
-     php
      rust
      python
      (clojure :variables
@@ -74,14 +78,11 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(evil-snipe
+   dotspacemacs-additional-packages '(go-playground
+                                      keyfreq
                                       coffee-mode
                                       graphql-mode
-                                      flycheck
-                                      adjust-parens
-                                      (vue-mode :location (recipe
-                                                           :fetcher github
-                                                           :repo "codefalling/vue-mode")))
+                                      adjust-parens)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -141,8 +142,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Fira Code"
-                               :size 12
+   dotspacemacs-default-font '("SF Mono"
+                               :size 11
                                :weight normal
                                :width normal)
    ;; The leader key
@@ -240,7 +241,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers 'relative
+   dotspacemacs-line-numbers nil
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -288,16 +289,17 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   (with-eval-after-load 'evil-maps
+    (evil-define-key nil evil-normal-state-map "s" 'evil-avy-goto-char-2)
     (define-key evil-motion-state-map (kbd "M-v") 'evil-paste-after)
     (define-key evil-insert-state-map (kbd "M-v") 'evil-paste-after)
-    (define-key evil-motion-state-map (kbd "C-j") 'evil-avy-goto-char-timer)
     (define-key evil-motion-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
     (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
     (define-key evil-motion-state-map (kbd "C-f") 'forward-char))
 
   (setq-default line-spacing 6)
   (setq-default dotspacemacs-use-spacelpa t)
-  (setq powerline-default-separator 'slant)
+  (setq powerline-default-separator nil)
+  (setq spaceline-minor-modes-p nil)
   (setq ruby-insert-encoding-magic-comment nil)
   (setq enh-ruby-add-encoding-comment-on-save nil)
   (setq js2-strict-missing-semi-warning nil)
@@ -383,44 +385,33 @@ you should place your code here."
 
   ;; helm settings
   (setq helm-split-window-in-side-p t)
-
-  ;; add syntax checking for clojure
-  (require 'flycheck)
-
-  (flycheck-define-checker clojure-joker
-    "A Clojure syntax checker using Joker.
-  See URL `https://github.com/candid82/joker'."
-    :command ("joker" "--lint" "-")
-    :standard-input t
-    :error-patterns
-    ((error line-start "<stdin>:" line ":" column ": " (0+ not-newline) (or "error: " "Exception: ") (message) line-end)
-     (warning line-start "<stdin>:" line ":" column ": " (0+ not-newline) "warning: " (message) line-end))
-    :modes (clojure-mode clojurec-mode)
-    :predicate (lambda () (not (string= "edn" (file-name-extension (buffer-file-name))))))
-
-  (flycheck-define-checker clojurescript-joker
-    "A ClojureScript syntax checker using Joker.
-  See URL `https://github.com/candid82/joker'."
-    :command ("joker" "--lintcljs" "-")
-    :standard-input t
-    :error-patterns
-    ((error line-start "<stdin>:" line ":" column ": " (0+ not-newline) (or "error: " "Exception: ") (message) line-end)
-     (warning line-start "<stdin>:" line ":" column ": " (0+ not-newline) "warning: " (message) line-end))
-    :modes (clojurescript-mode))
-
-  (add-to-list 'flycheck-checkers 'clojure-joker)
-  (add-to-list 'flycheck-checkers 'clojurescript-joker)
-
-  (add-hook 'clojure-mode-hook 'flycheck-mode)
-  (add-hook 'clojurescript-mode-hook 'flycheck-mode)
-
   (setq avy-timeout-seconds 0.2)
-  (evil-snipe-mode +1)
-  (evil-snipe-override-mode +1)
-  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+
+  ;; setup shell and env vars
+  (setenv "SHELL" "/usr/local/bin/fish")
+  (setq exec-path (cons "~/.rbenv/bin" exec-path))
+  (setenv "PATH" (concat "~/.rbenv/bin:" (getenv "PATH")))
+  (setq exec-path (cons "~/.rbenv/shims" exec-path))
+  (setenv "PATH" (concat "~/.rbenv/shims:" (getenv "PATH")))
+  (setq exec-path (cons "~/go/bin" exec-path))
+  (setenv "PATH" (concat "~/go/bin" (getenv "PATH")))
+
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1)
 
   (spaceline-compile))
 
+(defun new-trading-note (id)
+  (interactive "snote id: ")
+  (let ((file-name (concat
+                    "~/go/src/github.com/endenwer/trading/notes/"
+                    id
+                    "_"
+                    (number-to-string (truncate (float-time))) ".md")))
+    (switch-to-buffer (create-file-buffer file-name))
+    (set-visited-file-name file-name t)
+    (visual-line-mode)
+    (markdown-mode)))
 
 (defun gitlab--shell-to-string (cmd)
   "Execute CMD in a shell.
@@ -445,7 +436,7 @@ Returns stdout if command succeeds,otherwise returns nil"
 (defun get-country-from-branch (branch-name)
   (first (split-string branch-name "/")))
 
-(defun cashwagon-crm-create-mr ()
+(defun cashwagon-prod-mr ()
   "Open browser to view current selection, if applicable, in gitlab.
 If a Dired buffer is open, browse to the directory listing in gitlab.
 If the current buffer is neither a file or Dired buffer, open the current
@@ -456,8 +447,7 @@ project in gitlab"
          (url (format "https://git.cashwagon.com/general/webcrm/merge_requests/new?utf8=✓&merge_request[source_project_id]=10&merge_request[source_branch]=%s&merge_request[target_project_id]=10&merge_request[target_branch]=%s/production" branch-name country)))
     (browse-url url)))
 
-
-(defun cashwagon-site-create-mr ()
+(defun cashwagon-release-mr ()
   "Open browser to view current selection, if applicable, in gitlab.
 If a Dired buffer is open, browse to the directory listing in gitlab.
 If the current buffer is neither a file or Dired buffer, open the current
@@ -465,9 +455,8 @@ project in gitlab"
   (interactive)
   (let* ((branch-name (gitlab--get-branch))
          (country (get-country-from-branch branch-name))
-         (url (format "https://git.cashwagon.com/general/site/merge_requests/new?utf8=✓&merge_request[source_project_id]=11&merge_request[source_branch]=%s&merge_request[target_project_id]=11&merge_request[target_branch]=%s/production" branch-name country)))
+         (url (format "https://git.cashwagon.com/general/webcrm/merge_requests/new?utf8=✓&merge_request[source_project_id]=10&merge_request[source_branch]=%s&merge_request[target_project_id]=10&merge_request[target_branch]=%s/release" branch-name country)))
     (browse-url url)))
-
 
 
 ;; Do not write anything past this comment. This is where Emacs will
