@@ -44,7 +44,8 @@ values."
             shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
-     syntax-checking
+     (syntax-checking :variables
+                      syntax-checking-enable-tooltips nil)
      ;; spell-checking
      ;; version-control
 
@@ -72,23 +73,23 @@ values."
      ;; tools
      restclient
      (ranger :variables
-             range-show-preview t)
-     )
-   ;; List of additional packages that will be installed without being
-   ;; wrapped in a layer. If you need some configuration for these
-   ;; packages, then consider creating a layer. You can also put the
-   ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(go-playground
-                                      keyfreq
-                                      coffee-mode
-                                      graphql-mode
-                                      adjust-parens)
-   ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
-   ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
-   ;; are declared in a layer which is not a member of
-   ;; the list `dotspacemacs-configuration-layers'. (default t)
-   dotspacemacs-delete-orphan-packages t))
+             range-show-preview t))
+
+     ;; List of additional packages that will be installed without being
+     ;; wrapped in a layer. If you need some configuration for these
+     ;; packages, then consider creating a layer. You can also put the
+     ;; configuration in `dotspacemacs/user-config'.
+     dotspacemacs-additional-packages '(go-playground
+                                        keyfreq
+                                        coffee-mode
+                                        graphql-mode
+                                        adjust-parens)
+     ;; A list of packages and/or extensions that will not be install and loaded.
+     dotspacemacs-excluded-packages '()
+     ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
+     ;; are declared in a layer which is not a member of
+     ;; the list `dotspacemacs-configuration-layers'. (default t)
+     dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -137,7 +138,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn gruvbox)
+   dotspacemacs-themes '(dracula zenburn gruvbox)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
