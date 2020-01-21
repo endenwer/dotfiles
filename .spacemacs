@@ -62,7 +62,8 @@ values."
      rust
      python
      (clojure :variables
-              clojure-enable-clj-refactor t)
+              clojure-enable-clj-refactor t
+              clojure-enable-linters '(clj-kondo joker))
      emacs-lisp
      html
      javascript
@@ -83,7 +84,8 @@ values."
                                         keyfreq
                                         coffee-mode
                                         graphql-mode
-                                        adjust-parens)
+                                        adjust-parens
+                                        request)
      ;; A list of packages and/or extensions that will not be install and loaded.
      dotspacemacs-excluded-packages '()
      ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -143,7 +145,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("SF Mono"
+   dotspacemacs-default-font '("JetBrains Mono-11"
                                :size 11
                                :weight normal
                                :width normal)
@@ -331,6 +333,7 @@ you should place your code here."
   ;; clojure auto indent and deindent
   (require 'adjust-parens)
   (add-hook 'clojure-mode-hook #'adjust-parens-mode)
+  (add-hook 'emacs-lisp-mode-hook #'adjust-parens-mode)
 
   ;; smartparens config
   (require 'smartparens-config)
@@ -399,6 +402,9 @@ you should place your code here."
 
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1)
+
+  (with-eval-after-load 'transient
+    (transient-bind-q-to-quit))
 
   (spaceline-compile))
 
