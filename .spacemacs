@@ -17,7 +17,12 @@ values."
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
-   '(swift
+   '(
+     lsp
+     auto-completion
+     syntax-checking
+
+     swift
      php
      docker
      shell-scripts
@@ -26,13 +31,7 @@ values."
      ansible
      org
      ivy
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      gtags
-     auto-completion
      (better-defaults :variables
                       better-defaults-move-to-end-of-code-first t
                       better-defaults-move-to-beginning-of-code-first t)
@@ -44,9 +43,6 @@ values."
             shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
-     (syntax-checking :variables
-                      syntax-checking-enable-tooltips nil)
-     ;; spell-checking
      ;; version-control
 
      ;; langs
@@ -244,7 +240,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -317,7 +313,10 @@ you should place your code here."
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2)
-    (setq web-mode-attr-indent-offset 2))
+    (setq web-mode-attr-indent-offset 2)
+    (setq web-mode-style-padding 2)
+    (setq web-mode-script-padding 2)
+    (setq web-mode-block-padding 2))
   (add-hook 'web-mode-hook  'my-web-mode-hook)
 
   ;; scss hook
