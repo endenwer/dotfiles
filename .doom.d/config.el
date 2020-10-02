@@ -1,5 +1,8 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+; fix depricated warning
+(setq byte-compile-warnings '(cl-functions))
+
 (setq user-full-name "Stepan Lusnikov"
       user-mail-address "endenwer@gmail.com"
       doom-theme 'doom-zenburn
@@ -54,6 +57,7 @@
   "C-s-u" #'sp-backward-up-sexp
   "C-s-d" #'sp-splice-sexp
   "C-s-k" #'sp-kill-sexp
+  "C-s-y" #'sp-copy-sexp
   "C-s-t" #'sp-transpose-sexp
   "C-s-r" #'sp-raise-sexp
   "C-)"   #'sp-forward-slurp-sexp
