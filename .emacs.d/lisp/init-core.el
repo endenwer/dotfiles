@@ -54,6 +54,6 @@
       auto-save-list-file-prefix (concat user-emacs-directory ".local/cache/autosave/")
       auto-save-file-name-transforms (list (list ".*" auto-save-list-file-prefix t)))
 
-(set-face-attribute 'default nil :family "JetBrains Mono 1.05" :height 120 :weight 'normal)
+(set-face-attribute 'default nil :family "JetBrains Mono" :height 120 :weight 'normal)
 
 (provide 'init-core)
