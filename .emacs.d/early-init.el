@@ -8,7 +8,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
-(fringe-mode 4) ;; make both fringes 4 pixels wide
+(fringe-mode '(4 . 0))
 
 ;; - Finally we can try to avoid garbage collection at startup. The garbage collector can
 ;;   easily double startup time, so we suppress it at startup by turning up ~gc-cons-threshold~
