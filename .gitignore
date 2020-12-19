@@ -1,6 +1,7 @@
 .emacs.d/cache
 .emacs.d/eln-cache
 .emacs.d/elpa-28.0
+.emacs.d/elpa
 .emacs.d/projectile-bookmarks.eld
 .emacs.d/projectile.cache
 .emacs.d/straight
