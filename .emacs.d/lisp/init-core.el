@@ -56,4 +56,6 @@
 
 (set-face-attribute 'default nil :family "JetBrains Mono" :height 120 :weight 'normal)
 
+(global-display-line-numbers-mode)
+
 (provide 'init-core)
