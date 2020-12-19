@@ -7,4 +7,8 @@
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
 
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
 (provide 'init-evil)
