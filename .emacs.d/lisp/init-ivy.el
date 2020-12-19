@@ -12,6 +12,7 @@
    "C-k" 'ivy-previous-line
    "C-h" 'ivy-backward-kill-word)
   :config
+  (use-package wgrep) ;; used in avy occur
   (ivy-mode 1))
 
 (use-package counsel
