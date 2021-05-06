@@ -11,4 +11,11 @@
   :config
   (global-evil-surround-mode 1))
 
+(use-package evil-org
+  :after org
+  :hook (org-mode . evil-org-mode)
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
 (provide 'init-evil)
