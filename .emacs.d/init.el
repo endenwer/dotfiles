@@ -14,6 +14,7 @@
 (require 'init-flycheck)
 (require 'init-company)
 (require 'init-lsp)
+(require 'init-yasnippet)
 
 ;; langs
 (require 'init-js)
