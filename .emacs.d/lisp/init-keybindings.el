@@ -26,6 +26,11 @@
  "C-k" 'previous-line)
 
 (general-define-key
+ :states '(normal motion insert emacs)
+ "C-e" 'evil-end-of-line
+ "C-a" 'crux-move-beginning-of-line)
+
+(general-define-key
  :states 'normal
  :prefix leader-key
  "w" '(:ignore t :wk "windows")
@@ -36,6 +41,7 @@
  "fR" 'crux-rename-file-and-buffer
  "fD" 'crux-delete-file-and-buffer
  "fy" 'crux-kill-buffer-truename
+ "fs" 'save-buffer
  "b" '(:ignore t :wk "buffers")
  "bk" 'crux-kill-other-buffers
  "TAB" '(lambda () (interactive) (switch-to-buffer nil)))
