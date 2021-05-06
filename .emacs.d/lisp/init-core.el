@@ -38,6 +38,11 @@
 (setq-default indent-tabs-mode nil) ;; don't use tabs to indent
 (setq-default tab-width 4)          ;; but maintain correct appearance
 (setq ns-use-native-fullscreen nil) ;; native fullscreen adds new descktop, I don't need it
+(setq inhibit-startup-screen t)     ;; open scratch buffer on startup
+
+;; change cmd and alt keys
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier 'super)
 
 (setq-default show-trailing-whitespace t)
 
