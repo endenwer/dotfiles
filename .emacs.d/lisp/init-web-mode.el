@@ -14,6 +14,9 @@
 
 (use-package emmet-mode
   :hook (web-mode)
+  :general
+  (:keymaps 'emmet-mode-keymap
+   "C-j" nil)
   :custom
   (emmet-expand-jsx-className? t))
 
