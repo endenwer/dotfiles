@@ -5,9 +5,7 @@
   (:states 'normal
    :prefix leader-key
    "gg" 'magit-status
-   "gb" 'magit-blame-addition)
-  :config
-  (use-package evil-magit))
+   "gb" 'magit-blame-addition))
 
 
 (provide 'init-git)
