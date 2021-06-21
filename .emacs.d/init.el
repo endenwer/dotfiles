@@ -15,6 +15,7 @@
 (require 'init-company)
 (require 'init-lsp)
 (require 'init-yasnippet)
+(require 'init-treesitter)
 
 ;; langs
 (require 'init-js)
