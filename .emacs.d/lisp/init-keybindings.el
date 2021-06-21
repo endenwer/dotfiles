@@ -2,7 +2,7 @@
 
 (defconst leader-key "SPC")
 
-(defvar minibuffer-maps 
+(defvar minibuffer-maps
   '(minibuffer-local-map
     minibuffer-local-ns-map
     minibuffer-local-completion-map
@@ -12,6 +12,10 @@
 
 (general-create-definer leader-def
   :prefix leader-key)
+
+(general-define-key
+ :states 'normal
+ "Y" '(lambda () "yank to eol" (interactive) (kill-ring-save (point) (line-end-position))))
 
 (general-define-key
  "C-h" 'evil-window-left
