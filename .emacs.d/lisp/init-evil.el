@@ -3,9 +3,14 @@
 (use-package evil
   :custom
   (evil-want-Y-yank-to-eol t)
+  (evil-want-keybinding nil)
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
+
+(use-package evil-collection
+  :config
+  (evil-collection-init))
 
 (use-package evil-surround
   :config
