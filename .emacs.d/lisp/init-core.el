@@ -30,8 +30,8 @@
   :config
   (which-key-mode))
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin:/Users/endenwer/.rbenv/bin:/Users/endenwer/.rbenv/shims"))
-(setq exec-path (append exec-path '("/usr/local/bin" "/Users/endenwer/.rbenv/bin" "/Users/endenwer/.rbenv/shims")))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin:/Users/stepanlusnikov/.rbenv/bin:/Users/stepanlusnikov/.asdf/shims:"))
+(setq exec-path (append exec-path '("/usr/local/bin" "/Users/stepanlusnikov/.asdf/bin" "/Users/stepanlusnikov/.asdf/shims")))
 
 (setq column-number-mode t)         ;; show column number in modline
 (setq tab-always-indent 'complete)  ;; smart tab behavior - indent or complete
