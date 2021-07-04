@@ -3,6 +3,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" (file-name-directory load-file-name)))
 
 (require 'init-core)
+(require 'init-abbrev)
 (require 'init-theme)
 (require 'init-evil)
 (require 'init-smartparens)
