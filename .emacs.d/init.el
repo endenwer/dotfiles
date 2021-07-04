@@ -9,6 +9,7 @@
 (require 'init-keybindings)
 (require 'init-avy)
 (require 'init-ivy)
+(require 'init-prescient)
 (require 'init-git)
 (require 'init-projectile)
 (require 'init-flycheck)
