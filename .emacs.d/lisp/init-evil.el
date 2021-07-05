@@ -9,6 +9,8 @@
   (evil-set-undo-system 'undo-redo))
 
 (use-package evil-collection
+  :custom
+  (evil-collection-company-use-tng nil)
   :config
   (evil-collection-init))
 
