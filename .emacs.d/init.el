@@ -18,6 +18,7 @@
 (require 'init-lsp)
 (require 'init-yasnippet)
 (require 'init-treesitter)
+(require 'init-vterm)
 
 ;; langs
 (require 'init-js)
