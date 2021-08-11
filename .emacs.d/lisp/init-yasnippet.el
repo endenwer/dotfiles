@@ -9,6 +9,7 @@
   (:keymaps 'yas-minor-mode-map
    "C-;" 'yas-expand)
   :config
+  (diminish 'yas-minor-mode)
   (yas-reload-all))
 
 (use-package yasnippet-snippets

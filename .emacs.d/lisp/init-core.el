@@ -63,4 +63,8 @@
 
 (global-display-line-numbers-mode)
 
+;; hide modes from modline
+(diminish 'abbrev-mode)
+(diminish 'eldoc-mode)
+
 (provide 'init-core)

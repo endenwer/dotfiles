@@ -1,6 +1,7 @@
 ;;; init-projectile.el --- -*- lexical-binding: t -*-
 
 (use-package projectile
+  :diminish
   :requires ivy
   :general
   (:states 'normal
