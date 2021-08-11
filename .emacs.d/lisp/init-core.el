@@ -67,4 +67,9 @@
 (diminish 'abbrev-mode)
 (diminish 'eldoc-mode)
 
+;; Disabling the BPA makes redisplay faster, but might produce incorrect display
+;; reordering of bidirectional text with embedded parentheses and other bracket
+;; characters whose 'paired-bracket' Unicode property is non-nil.
+(setq bidi-inhibit-bpa t)  ; Emacs 27 only
+
 (provide 'init-core)
