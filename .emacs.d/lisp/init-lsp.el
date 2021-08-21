@@ -5,7 +5,6 @@
   ((web-mode . lsp-deferred)
    (typescript-mode . lsp-deferred)
    (js-mode . lsp-deferred)
-   (ruby-mode . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration))
   :custom
   (lsp-headerline-breadcrumb-enable nil)
