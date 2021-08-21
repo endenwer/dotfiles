@@ -19,6 +19,7 @@
 (require 'init-yasnippet)
 (require 'init-treesitter)
 (require 'init-vterm)
+(require 'init-restclient)
 
 ;; langs
 (require 'init-ruby)
