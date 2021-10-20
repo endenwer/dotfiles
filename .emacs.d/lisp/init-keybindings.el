@@ -38,8 +38,8 @@
  :states 'normal
  :prefix leader-key
  "w" '(:ignore t :wk "windows")
- "wv" 'split-window-right
- "ws" 'split-window-below
+ "wv" 'evil-window-vsplit
+ "ws" 'evil-window-split
  "wd" 'delete-window
  "f" '(:ignore t :wk "files")
  "fR" 'crux-rename-file-and-buffer
