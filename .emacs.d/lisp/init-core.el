@@ -44,6 +44,9 @@
 (setq ns-use-native-fullscreen nil) ;; native fullscreen adds new descktop, I don't need it
 (setq inhibit-startup-screen t)     ;; open scratch buffer on startup
 
+;; highlight current line
+(global-hl-line-mode +1)
+
 ;; change cmd and alt keys
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
@@ -75,5 +78,7 @@
 ;; reordering of bidirectional text with embedded parentheses and other bracket
 ;; characters whose 'paired-bracket' Unicode property is non-nil.
 (setq bidi-inhibit-bpa t)  ; Emacs 27 only
+
+(recentf-mode t)
 
 (provide 'init-core)
