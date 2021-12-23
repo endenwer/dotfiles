@@ -20,6 +20,9 @@
 
 (straight-use-package 'use-package)
 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
 (use-package diminish) ;; add ablity to hide modes from modeline
 (use-package general) ;; more convenient key definitions
 (use-package crux) ;; collection of useful functions
