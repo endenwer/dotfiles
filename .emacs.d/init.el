@@ -9,8 +9,6 @@
 (require 'init-smartparens)
 (require 'init-keybindings)
 (require 'init-avy)
-(require 'init-ivy)
-(require 'init-prescient)
 (require 'init-git)
 (require 'init-project)
 (require 'init-flycheck)
@@ -20,6 +18,7 @@
 (require 'init-treesitter)
 (require 'init-vterm)
 (require 'init-restclient)
+(require 'init-completion)
 
 ;; langs
 (require 'init-ruby)

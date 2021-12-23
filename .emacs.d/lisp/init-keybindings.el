@@ -42,6 +42,7 @@
  "ws" 'evil-window-split
  "wd" 'delete-window
  "f" '(:ignore t :wk "files")
+ "ff" 'find-file
  "fR" 'crux-rename-file-and-buffer
  "fD" 'crux-delete-file-and-buffer
  "fy" 'crux-kill-buffer-truename
