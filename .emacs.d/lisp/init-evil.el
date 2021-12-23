@@ -2,6 +2,7 @@
 
 (use-package evil
   :custom
+  (evil-symbol-word-search t)
   (evil-want-Y-yank-to-eol t)
   (evil-want-keybinding nil)
   :config
@@ -10,7 +11,10 @@
 
 (use-package evil-collection
   :custom
+  (evil-collection-mode-l)
+  (evil-collection-want-unimpaired-p nil)
   (evil-collection-company-use-tng nil)
+
   :config
   (evil-collection-init))
 
