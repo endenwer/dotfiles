@@ -13,3 +13,5 @@
 .emacs.d/recentf
 .emacs.d/tramp
 .emacs.d/abbrev_defs
+.emacs.d/bookmarks
+.emacs.d/history
