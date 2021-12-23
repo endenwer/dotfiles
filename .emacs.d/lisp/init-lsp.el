@@ -12,6 +12,8 @@
   (lsp lsp-deferred)
   :init
   (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)))
+  (setq read-process-output-max (* 1024 1024))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(".*\\.svelte$" . "svelte")))
 
 (provide 'init-lsp)
