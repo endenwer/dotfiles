@@ -12,7 +12,7 @@
 (require 'init-ivy)
 (require 'init-prescient)
 (require 'init-git)
-(require 'init-projectile)
+(require 'init-project)
 (require 'init-flycheck)
 (require 'init-company)
 (require 'init-lsp)
