@@ -5,6 +5,7 @@
   (ruby-mode . inf-ruby-minor-mode))
 
 (use-package robe
+  :straight (robe :type git :host github :repo "dgutov/robe")
   :hook
   (ruby-mode . robe-mode)
   :config
