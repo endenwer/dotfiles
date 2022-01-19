@@ -157,9 +157,8 @@
 
 (use-package embark
   :general
-  ("C-." . embark-act)         ;; pick some comfortable binding
-  ("C-;" . embark-dwim)        ;; good alternative: M-.
-
+  ("C-." 'embark-act)  ;; pick some comfortable binding
+  ("C-;" 'embark-dwim) ;; good alternative: M-.
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -228,6 +227,13 @@ targets."
   (:keymaps 'vertico-map
             "C-x C-d" 'consult-dir
             "C-x C-j" 'consult-dir-jump-file))
+
+(use-package consult-flycheck
+  :after consult
+  :general
+  (:states 'normal
+           :prefix leader-key
+           "el" 'consult-flycheck))
 
 (use-package swiper
   :general
