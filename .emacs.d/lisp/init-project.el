@@ -5,6 +5,8 @@
   :general
   (:states 'normal
    :prefix leader-key
-   "p" '(:keymap project-prefix-map :wk "Project prefix")))
+   "p" '(:keymap project-prefix-map :wk "Project prefix"))
+  :custom
+  (project-switch-commands 'project-find-file))
 
 (provide 'init-project)
