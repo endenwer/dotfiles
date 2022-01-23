@@ -1,6 +1,6 @@
 ;;; init-project.el --- -*- lexical-binding: t -*-
 
-(use-package projectile
+(use-package project
   :diminish
   :general
   (:states 'normal
