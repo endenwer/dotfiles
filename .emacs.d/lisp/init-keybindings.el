@@ -45,7 +45,7 @@
  "ff" 'find-file
  "fR" 'crux-rename-file-and-buffer
  "fD" 'crux-delete-file-and-buffer
- "fy" 'crux-kill-buffer-truename
+ "fy" '(lambda () (interactive) (kill-new (file-relative-name (buffer-file-name) (cdr (project-current)))))
  "fs" 'save-buffer
  "b" '(:ignore t :wk "buffers")
  "bk" 'crux-kill-other-buffers
