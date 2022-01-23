@@ -3,6 +3,7 @@
 (setq comp-speed 2)
 (setq package-enable-at-startup nil)
 (setq frame-inhibit-implied-resize t)
+(setq frame-resize-pixelwise t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
