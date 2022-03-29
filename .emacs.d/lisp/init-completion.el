@@ -251,4 +251,18 @@ targets."
 
 (use-package wgrep)
 
+(use-package copilot
+  :demand t
+  :after company
+  :straight (:host github :repo "zerolfx/copilot.el"
+                   :files ("dist" "copilot.el"))
+  :general
+  (:keymaps 'company-mode-map
+            "C-S-l" 'copilot-accept-completion)
+  :config
+  (add-hook 'post-command-hook (lambda ()
+                                 (copilot-clear-overlay)
+                                 (when (evil-insert-state-p)
+                                   (copilot-complete)))))
+
 (provide 'init-completion)
