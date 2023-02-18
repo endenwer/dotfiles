@@ -45,3 +45,6 @@
                    gc-cons-percentage 0.1
                    file-name-handler-alist file-name-handler-alist-original)
              (garbage-collect)) t)
+
+;; - Hide title bar
+(add-to-list 'default-frame-alist '(undecorated . t))
