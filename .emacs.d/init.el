@@ -4,7 +4,6 @@
 
 (require 'init-core)
 (require 'init-abbrev)
-(require 'init-theme)
 (require 'init-evil)
 (require 'init-smartparens)
 (require 'init-keybindings)
