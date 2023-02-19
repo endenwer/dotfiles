@@ -1,6 +1,6 @@
 ;;; init-keybindings.el --- -*- lexical-binding: t -*-
 
-(defconst leader-key "SPC")
+(defconst leader-key "<SPC>")
 
 (defvar minibuffer-maps
   '(minibuffer-local-map
@@ -25,9 +25,9 @@
 
 (general-define-key
  :keymaps minibuffer-maps
- "ESC" 'abort-recursive-edit
- "C-j" 'next-line
- "C-k" 'previous-line)
+ "<ESC>" 'abort-recursive-edit
+ "C-j"   'next-line
+ "C-k"   'previous-line)
 
 (general-define-key
  :states '(normal motion insert emacs)
