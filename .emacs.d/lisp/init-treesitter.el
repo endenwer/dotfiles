@@ -1,10 +1,6 @@
 ;;; init-treesitter.el --- -*- lexical-binding: t -*-
 
-(use-package tree-sitter
-  :diminish
-  :config
-  (use-package tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+(setq treesit-extra-load-path '("/usr/local/lib"))
+(require 'treesit)
 
 (provide 'init-treesitter)

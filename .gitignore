@@ -15,3 +15,4 @@
 .emacs.d/abbrev_defs
 .emacs.d/bookmarks
 .emacs.d/history
+.emacs.d/tree-sitter
