@@ -22,7 +22,7 @@
   ;; (setq vertico-scroll-margin 0)
 
   ;; Show more candidates
-  ;; (setq vertico-count 20)
+  (setq vertico-count 20)
 
   ;; Grow and shrink the Vertico minibuffer
   ;; (setq vertico-resize t)
@@ -255,10 +255,12 @@ targets."
   :demand t
   :after company
   :straight (:host github :repo "zerolfx/copilot.el"
-                   :files ("dist" "copilot.el"))
+                   :files ("dist" "*.el"))
   :general
   (:keymaps 'company-mode-map
-            "C-S-l" 'copilot-accept-completion)
+            "C-S-l" 'copilot-accept-completion
+            "C-S-j" 'copilot-next-completion
+            "C-S-k" 'copilot-previous-completion)
   :config
   (add-hook 'post-command-hook (lambda ()
                                  (copilot-clear-overlay)
