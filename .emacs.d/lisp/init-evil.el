@@ -13,7 +13,6 @@
   :custom
   (evil-collection-mode-l)
   (evil-collection-want-unimpaired-p nil)
-  (evil-collection-company-use-tng nil)
 
   :config
   (evil-collection-init))

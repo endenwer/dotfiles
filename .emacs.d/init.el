@@ -3,6 +3,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" (file-name-directory load-file-name)))
 
 (require 'init-core)
+(require 'init-treesitter)
 (require 'init-abbrev)
 (require 'init-evil)
 (require 'init-smartparens)
@@ -11,12 +12,10 @@
 (require 'init-git)
 (require 'init-project)
 (require 'init-flycheck)
-(require 'init-company)
-(require 'init-lsp)
 (require 'init-yasnippet)
-(require 'init-treesitter)
 (require 'init-vterm)
 (require 'init-restclient)
+(require 'init-lsp)
 (require 'init-completion)
 
 ;; langs

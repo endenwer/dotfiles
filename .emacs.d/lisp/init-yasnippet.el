@@ -2,7 +2,6 @@
 
 (use-package yasnippet
   :diminish
-  :after company
   :hook
   (prog-mode . yas-minor-mode)
   :general

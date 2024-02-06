@@ -1,19 +1,20 @@
 ;;; init-lsp.el --- -*- lexical-binding: t -*-
 
-(use-package lsp-mode
-  :hook
-  ((web-mode . lsp-deferred)
-   (typescript-mode . lsp-deferred)
-   (js-mode . lsp-deferred)
-   (lsp-mode . lsp-enable-which-key-integration))
-  :custom
-  (lsp-headerline-breadcrumb-enable nil)
-  :commands
-  (lsp lsp-deferred)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+
+(use-package markdown-mode)
+
+(use-package lsp-bridge
+  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+            :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+            :build (:not compile))
   :init
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024))
+  (global-lsp-bridge-mode)
   :config
-  (add-to-list 'lsp-language-id-configuration '(".*\\.svelte$" . "svelte")))
+  (evil-define-key 'insert acm-mode-map (kbd "C-j") #'acm-select-next)
+  (evil-define-key 'insert acm-mode-map (kbd "C-k") #'acm-select-prev)
+  (evil-define-key 'insert acm-mode-map (kbd "C-k") #'acm-complete)
+  (add-hook 'acm-mode-hook #'evil-normalize-keymaps))
 
 (provide 'init-lsp)

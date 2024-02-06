@@ -252,15 +252,13 @@ targets."
 (use-package wgrep)
 
 (use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
   :demand t
-  :after company
-  :straight (:host github :repo "zerolfx/copilot.el"
-                   :files ("dist" "*.el"))
   :general
-  (:keymaps 'company-mode-map
-            "C-S-l" 'copilot-accept-completion
-            "C-S-j" 'copilot-next-completion
-            "C-S-k" 'copilot-previous-completion)
+  (:keymaps 'copilot-completion-map
+           "C-S-l" 'copilot-accept-completion
+           "C-S-j" 'copilot-next-completion
+           "C-S-k" 'copilot-previous-completion)
   :config
   (add-hook 'post-command-hook (lambda ()
                                  (copilot-clear-overlay)
