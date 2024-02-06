@@ -16,3 +16,5 @@
 .emacs.d/bookmarks
 .emacs.d/history
 .emacs.d/tree-sitter
+.emacs.d/request
+.emacs.d/url
