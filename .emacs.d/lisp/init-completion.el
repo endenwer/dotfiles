@@ -265,4 +265,15 @@ targets."
                                  (when (evil-insert-state-p)
                                    (copilot-complete)))))
 
+(use-package company
+  :diminish
+  :hook
+  (prog-mode . global-company-mode)
+  :general
+  (:keymaps 'company-active-map
+   "C-l" 'company-complete-selection)
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0))
+
 (provide 'init-completion)
