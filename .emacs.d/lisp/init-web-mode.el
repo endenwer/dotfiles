@@ -2,7 +2,7 @@
 
 (use-package web-mode
   :mode
-  ("\\.tsx\\'" "\\.svelte\\'")
+  ("\\.svelte\\'")
   :custom
   (web-mode-enable-auto-quoting nil)
   (web-mode-block-padding 2)

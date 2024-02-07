@@ -17,6 +17,7 @@
 (require 'init-restclient)
 (require 'init-lsp)
 (require 'init-completion)
+(require 'init-combobulate)
 
 ;; langs
 (require 'init-ruby)

@@ -7,6 +7,7 @@
   :hook
   ((web-mode . lsp-deferred)
    (typescript-ts-mode . lsp-deferred)
+   (tsx-ts-mode . lsp-deferred)
    (js-ts-mode . lsp-deferred)
    (ruby-ts-mode . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration))

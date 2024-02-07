@@ -4,6 +4,7 @@
 (setq package-enable-at-startup nil)
 (setq frame-inhibit-implied-resize t)
 (setq frame-resize-pixelwise t)
+(setq native-comp-async-report-warnings-errors nil)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
