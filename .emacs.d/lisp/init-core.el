@@ -89,4 +89,12 @@
 
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
+;; customize modeline
+
+(setq-default mode-line-format
+`("%e" mode-line-front-space
+  mode-line-modified "  "
+  mode-line-buffer-identification "  " mode-line-position
+ mode-line-modes mode-line-misc-info))
+
 (provide 'init-core)

@@ -5,6 +5,7 @@
   (evil-symbol-word-search t)
   (evil-want-Y-yank-to-eol t)
   (evil-want-keybinding nil)
+  (evil-mode-line-format '(before . mode-line-front-space))
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))

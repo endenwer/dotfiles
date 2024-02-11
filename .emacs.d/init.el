@@ -20,7 +20,6 @@
 (require 'init-combobulate)
 
 ;; langs
-(require 'init-ruby)
 (require 'init-js)
 (require 'init-css)
 (require 'init-web-mode)
