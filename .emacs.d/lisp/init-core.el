@@ -50,7 +50,7 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
-(setq-default show-trailing-whitespace t)
+(setq-default show-trailing-whitespace nil)
 
 ;; revert buffers automatically when underlying files are changed externally
 (global-auto-revert-mode t)
@@ -96,5 +96,9 @@
   mode-line-modified "  "
   mode-line-buffer-identification "  " mode-line-position
  mode-line-modes mode-line-misc-info))
+
+;; midnight-mode runs commands daily
+;; it will clean buffers that are not in use with clean-buffer-list
+(midnight-mode t)
 
 (provide 'init-core)
