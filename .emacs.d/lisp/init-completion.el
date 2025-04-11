@@ -249,7 +249,8 @@ targets."
             "C-k" 'ivy-previous-line
             "C-h" 'ivy-backward-kill-word))
 
-(use-package wgrep)
+(use-package wgrep
+  :demand t)
 
 (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
