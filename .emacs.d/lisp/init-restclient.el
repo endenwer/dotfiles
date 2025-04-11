@@ -5,6 +5,7 @@
   :mode
   ("\\.http\\'")
   :config
+  (use-package jq-mode)
   (restclient-mode))
 
 (provide 'init-restclient)
