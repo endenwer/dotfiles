@@ -14,6 +14,7 @@
    (lsp-mode . lsp-enable-which-key-integration))
   :custom
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-svelte-plugin-svelte-compiler-warnings '((a11y-click-events-have-key-events . "ignore")))
   :commands
   (lsp lsp-deferred)
   :config
