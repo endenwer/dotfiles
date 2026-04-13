@@ -33,8 +33,13 @@
   :config
   (which-key-mode))
 
-(setenv "PATH" "/Users/endenwer/.pyenv/shims:/Users/endenwer/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/opt/homebrew/opt/texinfo/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin")
-(setq exec-path '("/Users/endenwer/.pyenv/shims" "/Users/endenwer/.asdf/shims" "/opt/homebrew/opt/asdf/libexec/bin" "/opt/homebrew/opt/texinfo/bin" "/opt/homebrew/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin"))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :config
+  (exec-path-from-shell-initialize))
+
+;; (setenv "PATH" "/Users/endenwer/.pyenv/shims:/Users/endenwer/.asdf/shims:/opt/homebrew/opt/asdf/libexec/bin:/opt/homebrew/opt/texinfo/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin")
+;; (setq exec-path '("/Users/endenwer/.pyenv/shims" "/Users/endenwer/.asdf/shims" "/opt/homebrew/opt/asdf/libexec/bin" "/opt/homebrew/opt/texinfo/bin" "/opt/homebrew/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin"))
 
 (setq column-number-mode t)         ;; show column number in modline
 (setq tab-always-indent 'complete)  ;; smart tab behavior - indent or complete

@@ -253,8 +253,10 @@ targets."
   :demand t)
 
 (use-package copilot
+  :diminish
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
-  :demand t
+  :hook
+  (prog-mode . copilot-mode)
   :general
   (:keymaps 'copilot-completion-map
            "C-S-l" 'copilot-accept-completion
