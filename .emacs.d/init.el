@@ -24,5 +24,6 @@
 (require 'init-css)
 (require 'init-web-mode)
 (require 'init-yaml)
+(require 'init-rust)
 
 (message "Emacs initialized in %s" (emacs-init-time))

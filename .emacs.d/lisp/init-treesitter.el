@@ -11,6 +11,7 @@
    (typescript-mode . typescript-ts-mode)
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
-   (ruby-mode . ruby-ts-mode)))
+   (ruby-mode . ruby-ts-mode)
+   (rust-mode . rust-ts-mode)))
 
 (provide 'init-treesitter)

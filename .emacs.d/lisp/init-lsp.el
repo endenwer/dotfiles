@@ -11,6 +11,7 @@
    (js-ts-mode . lsp-deferred)
    (ruby-ts-mode . lsp-deferred)
    (python-mode . lsp-deferred)
+   (rust-ts-mode . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration))
   :custom
   (lsp-headerline-breadcrumb-enable nil)
